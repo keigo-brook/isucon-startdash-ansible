@@ -1,0 +1,5 @@
+[development]
+XX.XXX.XXX.XXX
+
+[development:vars]
+ansible_ssh_user=isucon

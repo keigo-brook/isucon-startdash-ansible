@@ -1,0 +1,9 @@
+- name: "Check version"
+  command: python --version
+  register: python_version
+- debug: var=python_version.stderr_lines
+
+- name: "Check place"
+  command: which python
+  register: which_python
+- debug: var=which_python.stdout_lines

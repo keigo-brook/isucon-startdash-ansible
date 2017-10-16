@@ -1,0 +1,13 @@
+- name: Install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - tree
+    - vim-nox
+    - dstat
+    - tmux
+    - unzip
+    - MySQL-python
+    - zsh

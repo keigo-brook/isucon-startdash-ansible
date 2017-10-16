@@ -1,0 +1,11 @@
+- name: "backup /etc"
+  command: cp -r /etc /etc.bak
+- name: "backup home directory"
+  become: no
+  command: tar zcvf ~/home.tar.gz /home/isucon
+  async: 1
+  poll: 0
+- name: "backup database"
+  mysql_db: state=dump name=all target=/home/isucon/database_backup.sql
+  async: 1
+  poll: 0

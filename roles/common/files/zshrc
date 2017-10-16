@@ -1,0 +1,54 @@
+# Executes commands at the start of an interactive session.
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+plugins+=(git-aliases)
+
+if [ -e ~/.rbenv ]; then
+    [[ -d ~/.rbenv  ]] && eval "$(rbenv init -)"
+fi
+
+if [ -e ~/.pyenv ]; then
+    eval "$(pyenv init -)"
+fi
+
+
+# alias
+alias c='clear'
+alias h='history -i'
+alias ha='history -i -E 1'
+alias le=less
+alias rez='source ~/.zshenv && source ~/.zshrc'
+alias up='cd ..; ls -l'
+
+alias showkataribe="sudo cat /var/log/nginx/access.log | ~/kataribe/kataribe -f ~/kataribe/kataribe.toml | less"
+alias showslowquery="sudo mysqldumpslow -s t /var/log/mysql/mysql-slow.log | less"
+
+
+case ${OSTYPE} in
+     linux*)
+     # linux specific settings
+     [[ $COLORTERM = gnome-terminal && ! $TERM = screen-256color ]] && TERM=xterm-256color
+
+     if type dstat > /dev/null; then
+         alias dstat-full='dstat -Tclmdrn'
+         alias dstat-mem='dstat -Tclm'
+         alias dstat-cpu='dstat -Tclr'
+         alias dstat-net='dstat -Tclnd'
+         alias dstat-disk='dstat -Tcldr'
+     fi
+
+     if type peco > /dev/null; then
+         function peco-history-selection() {
+             BUFFER=$(\history -n 1 | tac | peco --query "$LBUFFER")
+             CURSOR=$#BUFFER
+             zle clear-screen
+         }
+         zle -N peco-history-selection
+         bindkey '^r' peco-history-selection
+     fi
+     ;;
+esac

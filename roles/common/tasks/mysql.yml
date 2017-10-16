@@ -1,0 +1,4 @@
+- name: "Check version"
+  command: mysql --version
+  register: mysql_version
+- debug: var=mysql_version.stdout_lines

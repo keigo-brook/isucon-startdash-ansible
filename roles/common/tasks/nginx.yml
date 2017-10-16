@@ -1,0 +1,11 @@
+- name: "Check version"
+  command: nginx -V
+  register: nginx_version
+- debug: var=nginx_version.stderr_lines
+
+- name: "Download kataribe"
+  become: no
+  unarchive:
+    src: https://github.com/matsuu/kataribe/releases/download/v0.3.0/linux_amd64.zip
+    dest: ~/ansible_test/kataribe
+    remote_src: yes

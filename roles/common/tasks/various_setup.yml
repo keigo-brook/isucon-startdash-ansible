@@ -1,0 +1,71 @@
+- name: "copy reload.sh to /home/isucon/reload.sh"
+  become: no
+  copy:
+    src: reload.sh
+    dest: ~/reload.sh
+    owner: isucon
+    group: isucon
+    mode: 0755
+
+- name: "copy vimrc to /home/isucon/.vimrc"
+  become: no
+  copy:
+    src: vimrc
+    dest: ~/.vimrc
+    owner: isucon
+    group: isucon
+    mode: 0644
+
+- name: "setup zsh"
+  become: no
+  copy:
+    src: "{{ item }}"
+    dest: "~/.{{ item }}"
+    owner: isucon
+    group: isucon
+    mode: 0644
+  with_items:
+    - zshrc
+    - zpreztorc
+
+- name: "clone prezto"
+  become: no
+  git:
+    repo: https://github.com/sorin-ionescu/prezto.git
+    dest: ~/.zprezto
+    recursive: yes
+
+- name: "setup prezto"
+  become: no
+  command: "ln -sf ~/.zprezto/runcoms/{{ item }} ~/.{{ item }}"
+  with_items:
+    - zlogin
+    - zlogout
+    - zprofile
+    - zshenv
+- name: "change default shell"
+  command: chsh -s /bin/zsh isucon
+
+- name: "add git aliases"
+  become: no
+  blockinfile:
+    dest: ~/.gitconfig
+    block: |
+      [alias]
+      	graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+      	co = checkout
+      	ci = commit
+        s  = status
+
+- name: "Download peco"
+  unarchive:
+    src: https://github.com/peco/peco/releases/download/v0.5.1/peco_linux_amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: "Install peco"
+  copy:
+    src: /tmp/peco_linux_amd64/peco
+    dest: /usr/local/bin/
+    remote_src: yes
+    mode: 0755
