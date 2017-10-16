@@ -7,5 +7,5 @@
   become: no
   unarchive:
     src: https://github.com/matsuu/kataribe/releases/download/v0.3.0/linux_amd64.zip
-    dest: ~/ansible_test/kataribe
+    dest: ~/kataribe
     remote_src: yes
