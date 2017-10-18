@@ -1,0 +1,8 @@
+- name: "Append public keys into hosts"
+  become: no
+  authorized_key:
+    user: isucon
+    key: "{{ lookup('file', item) }}"
+    state: present
+  with_fileglob:
+    - public_keys/*.pub

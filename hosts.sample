@@ -1,5 +1,8 @@
 [development]
-XX.XXX.XXX.XXX
+XXX.XXX.XXX.XXX
+
+[webservers]
+
 
 [development:vars]
 ansible_ssh_user=isucon

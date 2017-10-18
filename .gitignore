@@ -1,1 +1,3 @@
 *.retry
+roles/common/files/public_keys/
+hosts

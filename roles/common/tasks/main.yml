@@ -1,8 +1,9 @@
 ---
-- import_tasks: install.yml
-- import_tasks: collect_basic_info.yml
-- import_tasks: backup.yml
-- import_tasks: mysql.yml
-- import_tasks: nginx.yml
-- import_tasks: python.yml
-- import_tasks: various_setup.yml
+#- import_tasks: install.yml
+#- import_tasks: collect_basic_info.yml
+#- import_tasks: backup.yml
+#- import_tasks: mysql.yml
+#- import_tasks: nginx.yml
+#- import_tasks: python.yml
+#- import_tasks: various_setup.yml
+- import_tasks: ssh.yml
