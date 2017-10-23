@@ -1,24 +1,28 @@
 ## RUN
 ```
-ANSIBLE_NOCOWS=1 ansible-playbook -i hosts ./run_first.yml --private-key=~/.ssh/XXX.pem
+ansible-playbook -i hosts ./all_in_one.yml --private-key=~/.ssh/XXX.pem
 ```
 
 ## やること
 - インストール(install.yml)
+− sshキー追加(ssh.yml)
 - 情報収集(collect_basic_info.yml)
-- バックアップ
+  − slackに流す
+- バックアップ(backup.yml)
   - /etc以下を /etc.bakに
   - /home/isucon を/home/isucon/home.tar.gzに
   - データベースをすべて~/database_backup.sqlに
     - `mysql -u root データベースの名前 < ~/database_backup.sql`で読み込み
-- MySQL
+- MySQL(mysql.yml)
   - バージョン確認
-- Nginx
+- Nginx(nginx.yml)
   - バージョン確認
   - kataribeを~/kataribeにダウンロードして解凍
-- Python
+- Python(python.yml)
   - バージョン確認
   - which python (pyenv使ってるかどうかの確認)
+  - pyenv install
+  - python install
 - その他セットアップ
   - reload.shを~/に配置
   - .vimrcを配置

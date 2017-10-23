@@ -1,20 +1,63 @@
 - name: "OS"
-  debug: msg="{{ ansible_lsb }}"
+  debug: msg="{{ ansible_lsb | to_nice_json }}"
+- name: "to slack"
+  slack:
+    token: "{{ slack_token }}"
+    msg: "[{{inventory_hostname}}] OS:\n {{ ansible_lsb | to_nice_json }}"
+    color: good
 - name: "Memory"
   debug: msg="{{ ansible_memory_mb }}"
+- name: "to slack"
+  slack:
+    token: "{{ slack_token }}"
+    msg: "[{{inventory_hostname}}] Memory:\n {{ ansible_memory_mb | to_nice_json }}MB"
+    color: good
+
 - name: "CPU"
   debug: msg="{{ansible_processor}}"
+- name: "to slack"
+  slack:
+    token: "{{ slack_token }}"
+    msg: "[{{inventory_hostname}}] CPU:\n {{ ansible_processor | to_nice_json }}"
+    color: good
+
 - name: "AppArmor status"
   debug: msg="{{ansible_apparmor}}"
+- name: "to slack"
+  slack:
+    token: "{{ slack_token }}"
+    msg: "[{{inventory_hostname}}] AppArmor status: {{ ansible_apparmor | to_nice_json }}"
+    color: good
+
 - name: "Process status"
-  command: ps aux | grep -Ev "(*sh|\[.*\]|*tty|*ansible)"
+  become: no
+  shell: ps aux | grep -Ev "(*sh|\[.*\]|*tty|*ansible)"
   register: ps_result
 - debug: var=ps_result.stdout_lines
-- name: "tree -L 3"
-  command: tree -L 3 /home/isucon
+- name: "to slack"
+  slack:
+    token: "{{ slack_token }}"
+    msg: "[{{inventory_hostname}}] Process status:\n {{ ps_result.stdout_lines | to_nice_json }}"
+    color: good
+
+- name: "ls -a /home/iscon"
+  command: ls -a /home/isucon
   register: ls_result
 - debug: var=ls_result.stdout_lines
+- name: "to slack"
+  slack:
+    token: "{{ slack_token }}"
+    msg: "[{{inventory_hostname}}] ls -a /home/isucon\n: {{ ls_result.stdout_lines | to_nice_json }}"
+    color: good
+
 - name: "ls /etc/systemd/system"
   command: ls /etc/systemd/system
-  register ls_systemd_result
+  register: ls_systemd_result
 - debug: var=ls_systemd_result.stdout_lines
+- name: "to slack"
+  slack:
+    token: "{{ slack_token }}"
+    msg: "[{{inventory_hostname}}] ls /etc/systemd/system:\n {{ ls_systemd_result.stdout_lines | to_nice_json }}"
+    color: good
+
+

@@ -3,6 +3,12 @@
   register: nginx_version
 - debug: var=nginx_version.stderr_lines
 
+- name: "create kataribe dir"
+  become: no
+  file:
+    path: ~/kataribe
+    state: directory
+
 - name: "Download kataribe"
   become: no
   unarchive:

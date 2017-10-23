@@ -9,5 +9,10 @@
     - dstat
     - tmux
     - unzip
-    - MySQL-python
     - zsh
+    - python-mysqldb
+    - git
+    - mysql-server
+    - mysql-client
+    - nginx
+    - vim
