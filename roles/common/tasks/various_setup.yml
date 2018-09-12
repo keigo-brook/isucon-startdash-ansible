@@ -16,11 +16,11 @@
     group: isucon
     mode: 0644
 
-- name: "Install zsh"
-  apt:
-    name: zsh
-    state: present
-    update_cache: yes
+# - name: "Install zsh"
+#   apt:
+#     name: zsh
+#     state: present
+#     update_cache: yes
 
 - name: "setup zsh"
   become: no
@@ -56,6 +56,7 @@
   file:
     path: ~/.gitconfig
     state: touch
+
 - name: "add git aliases"
   become: no
   blockinfile:

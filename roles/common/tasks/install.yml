@@ -1,4 +1,5 @@
-- name: Install packages
+- name: Install packages for Ubuntu
+  when: "ansible_distribution == 'Ubuntu'"
   apt:
     name: "{{ item }}"
     state: present
@@ -16,3 +17,20 @@
     - mysql-client
     - nginx
     - vim
+
+- name: Install packages for CentOS
+  when: "ansible_distribution == 'CentOS'"
+  yum:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - tree
+    - dstat
+    - tmux
+    - unzip
+    - zsh
+    - git
+    - mariadb-server
+    - nginx
+    - htop
