@@ -17,6 +17,7 @@
     - mysql-client
     - nginx
     - vim
+    - vnstat
 
 - name: Install packages for CentOS
   when: "ansible_distribution == 'CentOS'"
@@ -32,5 +33,7 @@
     - zsh
     - git
     - mariadb-server
+    - mariadb-devel
     - nginx
     - htop
+    - vnstat
